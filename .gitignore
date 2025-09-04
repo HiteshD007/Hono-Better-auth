@@ -1,0 +1,10 @@
+# deps
+node_modules/
+
+generated/
+/logs
+
+
+.env
+
+.vscode
