@@ -7,5 +7,13 @@ export type Bindings = {}
 
 export type Variables = {
   user: typeof auth.$Infer.Session.user | null,
-  session: typeof auth.$Infer.Session.session | null
+  session: typeof auth.$Infer.Session.session | null,
+  jwtClaims?: {
+    sub: string
+    sid: string
+    role: string | null
+    banned: boolean
+    iat?: number
+    exp?: number
+  }
 }

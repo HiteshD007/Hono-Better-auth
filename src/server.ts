@@ -4,10 +4,12 @@ import { auth } from './auth';
 import { cors } from "hono/cors"
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
+import { verifyViaJwks } from './utils/jwks';
 import { Scalar } from '@scalar/hono-api-reference';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import authApp from './routes/auth.route';
 import adminApp from './routes/admin.route';
+import sessionsApp from './routes/sessions.route';
 
 const app = new OpenAPIHono<{
   Bindings: Bindings,
@@ -48,8 +50,25 @@ app.use("*" , async (c, next) => {
 });
 
 
+// Parse Bearer JWT if no session is present
+app.use("*", async (c, next) => {
+  if (c.get('session')) return next();
+  const authz = c.req.header('authorization');
+  if (!authz || !authz.startsWith('Bearer ')) return next();
+  try {
+    const token = authz.slice(7);
+    const claims = await verifyViaJwks(token);
+    c.set('jwtClaims', claims as any);
+  } catch {
+    // ignore invalid/expired token
+  }
+  return next();
+});
+
+
 app.route('/auth', authApp);
 app.route('/admin', adminApp);
+app.route('/sessions', sessionsApp);
 
 
 app.doc("/docs", {

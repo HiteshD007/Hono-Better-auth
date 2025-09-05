@@ -21,7 +21,8 @@
     "mongoose": "^8.18.0",
     "redis": "^5.8.2",
     "ts-node": "^10.9.2",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "jose": "^5.9.6"
   },
   "devDependencies": {
     "@types/bun": "latest",
