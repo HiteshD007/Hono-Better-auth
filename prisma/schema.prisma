@@ -85,3 +85,12 @@ model Verification {
 
   @@map("verification")
 }
+
+model Jwks {
+  id         String   @id @map("_id")
+  publicKey  String
+  privateKey String
+  createdAt  DateTime
+
+  @@map("jwks")
+}

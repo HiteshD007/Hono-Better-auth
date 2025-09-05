@@ -1,5 +1,5 @@
 import { betterAuth } from "better-auth";
-import { admin, createAuthMiddleware, openAPI } from "better-auth/plugins";
+import { admin, createAuthMiddleware, openAPI, jwt, multiSession } from "better-auth/plugins";
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { prisma } from "./utils/prisma";
 import { emitUserEvent } from "./utils/events";
@@ -16,6 +16,10 @@ export const auth = betterAuth({
   plugins: [
     openAPI(),
     admin(),
+    jwt(),
+    multiSession({
+      maximumSessions: 3
+    }),
   ],
 
   hooks:{
