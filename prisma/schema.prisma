@@ -35,7 +35,6 @@ model User {
   banExpires    DateTime?
   sessions      Session[]
   accounts      Account[]
-  test          Boolean?    @default(false)
 
   @@unique([email])
   @@map("user")

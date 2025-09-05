@@ -72,9 +72,8 @@ app.doc("/docs", {
     },
     termsOfService:"should not be used for hacking means"
   },
-  servers: [{url : "http://localhost:8000/api", description: "Local Host Server"}],
-}
-);
+  servers: [{url : "http://localhost:8000", description: "Local Host Server"}],
+});
 
 app.get(
   '/reference',
@@ -104,8 +103,6 @@ app.get(
 );
 
 
-
-
 app.notFound((c) => {
   return c.text("Route Not Found", 404);
 });
@@ -114,7 +111,9 @@ app.notFound((c) => {
 serve({
   port: 8000,
   fetch: app.fetch
-}, (info) => logger.info(`Server started on Port ${info.port}`));
+}, (info) => {
+  logger.info(`Server started on Port ${info.port}`)
+});
 
 
 // export default {
