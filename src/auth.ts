@@ -15,8 +15,6 @@ export const auth = betterAuth({
       sameSite: "None",
       httpOnly: false,
       secure: true,
-      domain: ".hono-next.onrender.com",
-      path: "/",
     }
   },
   emailAndPassword: {
