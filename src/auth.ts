@@ -10,14 +10,16 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "mongodb"
   }),
-  // advanced:{
-  //   defaultCookieAttributes:{
-  //     domain:"hono-next.onrender.com",
-  //     path: "/",
-  //     sameSite:"lax",
-  //     secure: true,
-  //   }
-  // },
+  advanced:{
+    defaultCookieAttributes:{
+      sameSite:"none",
+      secure: true,
+      httpOnly: true
+    },
+    crossSubDomainCookies:{
+      enabled: true
+    }
+  },
   emailAndPassword: {
     enabled: true,
   },
