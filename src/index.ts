@@ -183,37 +183,37 @@ app.get(
   })
 );
 
-app.use('/graphql/simple', graphqlServer({
-  schema:simpleSchema,
-  rootResolver: rootResolver,
-  graphiql: true
-}));
+// app.use('/graphql/simple', graphqlServer({
+//   schema:simpleSchema,
+//   rootResolver: rootResolver,
+//   graphiql: true
+// }));
 
 // GraphQL endpoint using pothos schema
-app.use('/graphql', graphqlServer({
-  schema: QLSchema,
-  graphiql: true // process.env.NODE_ENV === 'development', // Enable GraphiQL in development
-}));
+// app.use('/graphql', graphqlServer({
+//   schema: QLSchema,
+//   graphiql: true // process.env.NODE_ENV === 'development', // Enable GraphiQL in development
+// }));
 
 
-const yoga = createYoga({
-  schema: QLSchema, // your Pothos schema
-  graphiql: true,
-  graphqlEndpoint: '/api/graphql/yoga'
-});
+// const yoga = createYoga({
+//   schema: QLSchema, // your Pothos schema
+//   graphiql: true,
+//   graphqlEndpoint: '/api/graphql/yoga'
+// });
 
 
 
-app.use('/graphql/yoga', async (c) => {
-  return yoga(c.req.raw, c.env)
-});
+// app.use('/graphql/yoga', async (c) => {
+//   return yoga(c.req.raw, c.env)
+// });
 
 
-app.post('/lambda-invoke',async (c) => {
-  const body = await c.req.json();
-  console.log(body);
-  return c.json({success:true, message:"successfully triggered from lambda"})
-});
+// app.post('/lambda-invoke',async (c) => {
+//   const body = await c.req.json();
+//   console.log(body);
+//   return c.json({success:true, message:"successfully triggered from lambda"})
+// });
 
 app.notFound((c) => {
   return c.text("Route Not Found", 404);
