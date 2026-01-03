@@ -1,5 +1,7 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, OpenAPIHono, z, RouteConfigToTypedResponse } from "@hono/zod-openapi";
 import { UserModelSchema } from "../../generated/zod/schemas";
+import { signIn } from "../controllers/auth.controller";
+
 const adminApp = new OpenAPIHono();
 
 
@@ -33,15 +35,10 @@ const mainRoute = createRoute({
 
 
 
+export type mainRouteReturn = RouteConfigToTypedResponse<typeof mainRoute>
 
-
-adminApp.openapi(mainRoute, (c) => {
-  return c.json({
-    id: "h1", 
-    name: "hitesh", 
-    email: "hitesh@example.com", 
-  }, 200)
-  return c.text("something went wrong", 400);
+adminApp.openapi(mainRoute, async (c) => {
+  return await signIn(c);
 });
 
 

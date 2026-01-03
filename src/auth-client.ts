@@ -8,6 +8,26 @@ export const authClient = createAuthClient({
   ]
 })
 
+
+authClient.updateUser({
+  name: "hitesh",
+  image: "abc"
+},{
+  onSuccess({data}) {
+    return data;
+  },
+})
+
+authClient.getSession({},{
+  onSuccess({data}) {
+    return data;
+  },
+  onError({error}) {
+    return
+  },
+})
+
+
 // Usage examples:
 // 
 // List all device sessions

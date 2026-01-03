@@ -13,24 +13,51 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  socialProviders:{
+    google:{
+      clientId: process.env.HITESH_GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.HITESH_GOOGLE_SECRET!,
+    }
+  },
   plugins: [
     openAPI(),
-    admin(),
+    admin({
+      adminUserIds: ["vKWCRdVmL5i9gAMZX5kgJtsSJRjt0i3Q"],
+      adminRoles: ["admin","super-admin","moderator"],
+      defaultRole: "user",
+    }),
     jwt(),
     multiSession({
       maximumSessions: 3
     }),
   ],
+  user:{
+    additionalFields:{
 
-  hooks:{
-    after: createAuthMiddleware(async (ctx) => {
-        if(ctx.path.includes("/sign-up")){
+    }
+  },
+  session:{
+
+  },
+  databaseHooks:{
+    user:{
+      create: {
+        async after(user, context) {
           console.log("Event emitted to update other services");
-          await emitUserEvent("user:created", {userId :ctx.context.newSession?.user.id});
-        }
-      })
-  }
+          await emitUserEvent("user:created", {userId : user.id});
+        },
+      },
+      
+    },
+  },
+  hooks:{
+    // after: createAuthMiddleware(async (ctx) => {
+    //     if(ctx.path.includes("/sign-up")){
+    //       console.log("Event emitted to update other services");
+    //       await emitUserEvent("user:created", {userId :ctx.context.newSession?.user.id});
+    //     }
+    //   })
+  },
+  trustedOrigins: ["http://localhost:3000"]
   
 });
-
-

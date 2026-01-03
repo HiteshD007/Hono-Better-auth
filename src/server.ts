@@ -3,6 +3,10 @@ import logger from './utils/winston';
 import { auth } from './auth';
 import { cors } from "hono/cors"
 import { serve } from '@hono/node-server';
+
+import { graphqlServer } from '@hono/graphql-server'
+import { createYoga } from 'graphql-yoga'
+
 import { Hono } from 'hono';
 import { verifyViaJwks } from './utils/jwks';
 import { Scalar } from '@scalar/hono-api-reference';
@@ -10,6 +14,8 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import authApp from './routes/auth.route';
 import adminApp from './routes/admin.route';
 import sessionsApp from './routes/sessions.route';
+import { QLSchema } from './utils/schema-builder';
+import { rootResolver, simpleSchema } from './graphql';
 
 const app = new OpenAPIHono<{
   Bindings: Bindings,
@@ -21,7 +27,7 @@ app.use(
 	cors({
 		origin: "http://localhost:3000", // replace with your origin
 		allowHeaders: ["Content-Type", "Authorization"],
-		allowMethods: ["POST", "GET", "OPTIONS"],
+		allowMethods: ["POST", "GET", "OPTIONS","PATCH","DELETE"],
 		exposeHeaders: ["Content-Length"],
 		maxAge: 600,
 		credentials: true,
@@ -65,6 +71,9 @@ app.use("*", async (c, next) => {
   return next();
 });
 
+app.get('/' , async (c) => {
+  return c.text('correctly working.')
+})
 
 app.route('/auth', authApp);
 app.route('/admin', adminApp);
@@ -121,6 +130,37 @@ app.get(
   })
 );
 
+app.use('/graphql/simple', graphqlServer({
+  schema:simpleSchema,
+  rootResolver: rootResolver,
+  graphiql: true
+}));
+
+// GraphQL endpoint using pothos schema
+app.use('/graphql', graphqlServer({
+  schema: QLSchema,
+  graphiql: true // process.env.NODE_ENV === 'development', // Enable GraphiQL in development
+}));
+
+
+const yoga = createYoga({
+  schema: QLSchema, // your Pothos schema
+  graphiql: true,
+  graphqlEndpoint: '/api/graphql/yoga'
+});
+
+
+
+app.use('/graphql/yoga', async (c) => {
+  return yoga(c.req.raw, c.env)
+});
+
+
+app.post('/lambda-invoke',async (c) => {
+  const body = await c.req.json();
+  console.log(body);
+  return c.json({success:true, message:"successfully triggered from lambda"})
+});
 
 app.notFound((c) => {
   return c.text("Route Not Found", 404);
@@ -132,8 +172,8 @@ serve({
   fetch: app.fetch
 }, (info) => {
   logger.info(`Server started on Port ${info.port}`)
+  logger.info(`GRAPHQL GraphQL endpoint: http://localhost:${info.port}/api/graphql`)
 });
-
 
 // export default {
 //   port: 8000,

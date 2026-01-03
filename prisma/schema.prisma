@@ -11,6 +11,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
 generator zod {
   provider = "prisma-zod-generator"
   output   = "../generated/zod"
