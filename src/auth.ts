@@ -12,8 +12,7 @@ export const auth = betterAuth({
   }),
   advanced:{
     defaultCookieAttributes:{
-      domain: ".onrender.com",
-      sameSite: "None",
+      sameSite: "none",
       httpOnly: true,
       secure: true,
     }
