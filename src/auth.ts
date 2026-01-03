@@ -11,14 +11,10 @@ export const auth = betterAuth({
     provider: "mongodb"
   }),
   advanced:{
-    cookies:{
-      session_token: {
-				attributes: {
-					sameSite: "strict",
-					secure: true,
-					httpOnly: true,
-				}
-			},
+    defaultCookieAttributes:{
+      sameSite: "strict",
+      httpOnly: true,
+      secure: true,
     }
   },
   emailAndPassword: {
