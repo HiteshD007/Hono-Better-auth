@@ -10,6 +10,17 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "mongodb"
   }),
+  advanced:{
+    cookies:{
+      session_token: {
+				attributes: {
+					sameSite: "strict",
+					secure: true,
+					httpOnly: true,
+				}
+			},
+    }
+  },
   emailAndPassword: {
     enabled: true,
   },
