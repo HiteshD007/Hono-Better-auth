@@ -2,8 +2,8 @@
   "name": "hono",
   "scripts": {
     "dev": "bun run --hot src/server.ts",
-    "build": "bun run prisma:generate; bun run prisma:push; bun build src/server.ts --target=bun --outdir=dist",
-    "start": "bun run dist/server.js",
+    "build": "bun run prisma:generate; bun run prisma:push; bun build src/index.ts --target=bun --outdir=dist",
+    "start": "bun run dist/index.js",
     "prisma:generate": "npx prisma generate",
     "prisma:push": "npx prisma db push",
     "test": "vitest"
