@@ -12,7 +12,7 @@ export const auth = betterAuth({
   }),
   advanced:{
     defaultCookieAttributes:{
-      domain: ".hono-next.onrender.com",
+      domain: ".onrender.com",
       sameSite: "None",
       httpOnly: true,
       secure: true,
