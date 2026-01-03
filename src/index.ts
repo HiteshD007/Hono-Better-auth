@@ -220,18 +220,18 @@ app.notFound((c) => {
 });
 
 
-serve({
-  port: 8000,
-  fetch: app.fetch
-}, (info) => {
-  console.log(`Server started on Port ${info.port}`)
-  console.log(`GRAPHQL GraphQL endpoint: http://localhost:${info.port}/api/graphql`)
-});
-
-// export default {
+// serve({
 //   port: 8000,
 //   fetch: app.fetch
-// }
+// }, (info) => {
+//   console.log(`Server started on Port ${info.port}`)
+//   console.log(`GRAPHQL GraphQL endpoint: http://localhost:${info.port}/api/graphql`)
+// });
+
+export default {
+  port: 8000,
+  fetch: app.fetch
+}
 
 
 export { app };
