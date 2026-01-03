@@ -7,13 +7,11 @@ import { prisma } from "./utils/prisma";
 
 
 export const auth = betterAuth({
-  baseURL: 'https://hono-next.onrender.com',
   database: prismaAdapter(prisma, {
     provider: "mongodb"
   }),
   advanced:{
     defaultCookieAttributes:{
-      domain: "hono-next.onrender.com",
       sameSite: "none",
       httpOnly: true,
       secure: true,
