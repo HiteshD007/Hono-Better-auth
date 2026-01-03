@@ -12,8 +12,9 @@ export const auth = betterAuth({
   }),
   advanced:{
     defaultCookieAttributes:{
+      domain: ".hono-next.onrender.com",
       sameSite: "None",
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
     }
   },
@@ -65,6 +66,6 @@ export const auth = betterAuth({
     //     }
     //   })
   },
-  trustedOrigins: ["http://localhost:3000"," https://hono-next.onrender.com"]
+  trustedOrigins: ["http://localhost:3000","https://hono-next.onrender.com"]
   
 });
