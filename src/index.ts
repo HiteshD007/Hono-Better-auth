@@ -52,7 +52,7 @@
 
 
 import { Bindings, Variables } from './types';
-import logger from './utils/winston';
+// import logger from './utils/winston';
 import { auth } from './auth';
 import { cors } from "hono/cors"
 import { serve } from '@hono/node-server';
@@ -89,7 +89,7 @@ app.use(
 
 
 app.use("*" , async (c, next) => {
-  logger.http("HTTP REQUEST -> ",{
+  console.log("HTTP REQUEST -> ",{
     Method: c.req.method, 
     Path: c.req.path
   });
@@ -220,18 +220,18 @@ app.notFound((c) => {
 });
 
 
-// serve({
-//   port: 8000,
-//   fetch: app.fetch
-// }, (info) => {
-//   logger.info(`Server started on Port ${info.port}`)
-//   logger.info(`GRAPHQL GraphQL endpoint: http://localhost:${info.port}/api/graphql`)
-// });
-
-export default {
+serve({
   port: 8000,
   fetch: app.fetch
-}
+}, (info) => {
+  console.log(`Server started on Port ${info.port}`)
+  console.log(`GRAPHQL GraphQL endpoint: http://localhost:${info.port}/api/graphql`)
+});
+
+// export default {
+//   port: 8000,
+//   fetch: app.fetch
+// }
 
 
 export { app };
