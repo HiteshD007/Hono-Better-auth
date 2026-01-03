@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { admin, createAuthMiddleware, openAPI, jwt, multiSession } from "better-auth/plugins";
 import { prismaAdapter } from "better-auth/adapters/prisma"
 import { prisma } from "./utils/prisma";
-import { emitUserEvent } from "./utils/events";
+// import { emitUserEvent } from "./utils/events";
 
 
 
@@ -44,7 +44,7 @@ export const auth = betterAuth({
       create: {
         async after(user, context) {
           console.log("Event emitted to update other services");
-          await emitUserEvent("user:created", {userId : user.id});
+          // await emitUserEvent("user:created", {userId : user.id});
         },
       },
       

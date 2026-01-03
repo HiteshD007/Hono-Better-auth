@@ -78,7 +78,7 @@ const app = new OpenAPIHono<{
 app.use(
   "*", // "/api/auth/*" for specific route
   cors({
-    origin: "http://localhost:3000", // replace with your origin
+    origin: ["http://localhost:3000","https://hono-next.onrender.com"], // replace with your origin
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS","PATCH","DELETE"],
     exposeHeaders: ["Content-Length"],
