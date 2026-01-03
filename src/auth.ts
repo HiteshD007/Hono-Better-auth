@@ -7,6 +7,7 @@ import { prisma } from "./utils/prisma";
 
 
 export const auth = betterAuth({
+  baseURL: 'https://hono-next.onrender.com',
   database: prismaAdapter(prisma, {
     provider: "mongodb"
   }),
@@ -66,6 +67,6 @@ export const auth = betterAuth({
     //     }
     //   })
   },
-  trustedOrigins: ["http://localhost:3000","https://hono-next.onrender.com"]
+  trustedOrigins: ["http://localhost:3000","https://hono-next.onrender.com",'https://hono-better-auth.onrender.com']
   
 });
